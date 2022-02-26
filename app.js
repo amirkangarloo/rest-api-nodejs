@@ -3,11 +3,17 @@
 const express = require('express');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 const productRouters = require('./app/routes/products');
 const orderRouters = require('./app/routes/orders');
 
 const app = express();
 
+mongoose.connect('mongodb+srv://node-rest-api:'
+    + process.env.MONGO_ATLAS_PASSWORD 
+    +'@node-rest-api.gcyge.mongodb.net/myFirstDatabase?retryWrites=true&w=majority', {
+        useNewUrlParser: true
+    });
 
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({

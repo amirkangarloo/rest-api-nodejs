@@ -5,12 +5,29 @@ const router = express.Router();
 const mongoose = require('mongoose');
 
 const Product = require('../models/product');
+const productUrl = "http://localhost:3000/products/";
 
 router.get('/', (req, res) => {
     Product.find()
+        .select("name price _id")
         .exec()
         .then((docs) => {
-            res.status(200).json(docs);
+            console.log(productUrl);
+            const response = {
+                count: docs.length,
+                products: docs.map((docs) => {
+                    return {
+                        name: docs.name,
+                        price: docs.price,
+                        _id: docs._id,
+                        request: {
+                            method: "GET",
+                            url: productUrl + docs._id
+                        }
+                    }
+                })
+            };
+            res.status(200).json(response);
         })
         .catch((err) => {
             res.status(500).json({
@@ -30,8 +47,16 @@ router.post('/', (req, res) => {
         .then((result) => {
             console.log(result);
             res.status(201).json({
-                message: 'Hnadeling POST request to /products',
-                createProduct: result
+                message: 'Created product successfully',
+                createProduct: {
+                    name: result.name,
+                    price: result.price,
+                    _id: result._id,
+                    request: {
+                        method: "GET",
+                        url: productUrl + result._id
+                    }
+                }
             });
         })
         .catch((err) => {
@@ -47,9 +72,17 @@ router.get('/:productId', (req, res) => {
     Product.findById(id)
         .exec()
         .then((doc) => {
-            console.log(doc);
             if (doc) {
-                res.status(200).json(doc);
+                res.status(200).json({
+                    name: doc.name,
+                    price: doc.price,
+                    _id: doc._id,
+                    request: {
+                        method: "GET",
+                        description: "GET_ALL_PRODUCTS",
+                        url: productUrl
+                    }
+                });
                 return;
             }
             res.status(404).json({
@@ -71,13 +104,21 @@ router.patch('/:productId', (req, res) => {
     for (const ops of req.body) {
         updateOps[ops.key] = ops.value;
     };
-    Product.findByIdAndUpdate({_id: id}, {$set: updateOps})
+    Product.findByIdAndUpdate({
+            _id: id
+        }, {
+            $set: updateOps
+        })
         .exec()
         .then((result) => {
             console.log(result);
             if (result) {
                 res.status(200).json({
-                    message: `UPDATE product by ID ${id}`
+                    message: `UPDATE product by ID ${id}`,
+                    request: {
+                        method: "GET",
+                        url: productUrl + id
+                    }
                 });
                 return;
             }
@@ -97,12 +138,13 @@ router.patch('/:productId', (req, res) => {
 router.delete('/:productId', (req, res) => {
     const id = req.params.productId;
     Product.findByIdAndRemove(id)
+        .select('name price _id')
         .exec()
         .then((result) => {
             console.log(result);
             if (result) {
                 res.status(200).json({
-                    message: `Product by ID ${id} has delete`,
+                    message: `Product by ID ${id} has deleted`,
                     product: result
                 });
                 return;

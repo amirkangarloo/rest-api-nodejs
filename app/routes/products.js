@@ -12,7 +12,6 @@ router.get('/', (req, res) => {
         .select("name price _id")
         .exec()
         .then((docs) => {
-            console.log(productUrl);
             const response = {
                 count: docs.length,
                 products: docs.map((docs) => {
@@ -45,7 +44,6 @@ router.post('/', (req, res) => {
     product
         .save()
         .then((result) => {
-            console.log(result);
             res.status(201).json({
                 message: 'Created product successfully',
                 createProduct: {
@@ -111,7 +109,6 @@ router.patch('/:productId', (req, res) => {
         })
         .exec()
         .then((result) => {
-            console.log(result);
             if (result) {
                 res.status(200).json({
                     message: `UPDATE product by ID ${id}`,
@@ -141,10 +138,9 @@ router.delete('/:productId', (req, res) => {
         .select('name price _id')
         .exec()
         .then((result) => {
-            console.log(result);
             if (result) {
                 res.status(200).json({
-                    message: `Product by ID ${id} has deleted`,
+                    message: `Product by ID ${id} was deleted`,
                     product: result
                 });
                 return;

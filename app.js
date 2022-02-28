@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const productRouters = require('./app/routes/products');
 const orderRouters = require('./app/routes/orders');
+const userRouters = require('./app/routes/users');
 
 const app = express();
 
@@ -37,6 +38,7 @@ app.use((req, res, next) => {
 // Routers for handle requests
 app.use('/products', productRouters);
 app.use('/orders', orderRouters);
+app.use('/users', userRouters);
 
 // Handling Errors
 app.use((req, res, next) => {

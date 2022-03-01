@@ -5,6 +5,7 @@ const router = express.Router();
 const mongoose = require('mongoose');
 
 const Product = require('../models/product');
+const checkAuth = require('../middleware/check-auth');
 const productUrl = "http://localhost:3000/products/";
 
 router.get('/', (req, res) => {
@@ -35,7 +36,7 @@ router.get('/', (req, res) => {
         });
 });
 
-router.post('/', (req, res) => {
+router.post('/', checkAuth, (req, res) => {
     const product = new Product({
         _id: new mongoose.Types.ObjectId(),
         name: req.body.name,
@@ -96,7 +97,7 @@ router.get('/:productId', (req, res) => {
         });
 });
 
-router.patch('/:productId', (req, res) => {
+router.patch('/:productId', checkAuth, (req, res) => {
     const id = req.params.productId;
     const updateOps = {};
     for (const ops of req.body) {
@@ -132,7 +133,7 @@ router.patch('/:productId', (req, res) => {
         });
 });
 
-router.delete('/:productId', (req, res) => {
+router.delete('/:productId', checkAuth, (req, res) => {
     const id = req.params.productId;
     Product.findByIdAndRemove(id)
         .select('name price _id')

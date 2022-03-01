@@ -5,9 +5,10 @@ const router = express.Router();
 const mongoose = require('mongoose');
 
 const Order = require('../models/order');
+const checkAuth = require('../middleware/check-auth');
 const orderUrl = "http://localhost:3000/orders/";
 
-router.get('/', (req, res) => {
+router.get('/', checkAuth, (req, res) => {
     Order.find()
         .select("product quantity _id")
         .exec()
@@ -35,7 +36,7 @@ router.get('/', (req, res) => {
         });
 });
 
-router.post('/', (req, res) => {
+router.post('/', checkAuth, (req, res) => {
     const order = new Order({
         _id: mongoose.Types.ObjectId(),
         quantity: req.body.quantity,
@@ -64,7 +65,7 @@ router.post('/', (req, res) => {
         });
 });
 
-router.get('/:orderId', (req, res) => {
+router.get('/:orderId', checkAuth, (req, res) => {
     const id = req.params.orderId;
     Order.findById(id)
         .exec()
@@ -94,7 +95,7 @@ router.get('/:orderId', (req, res) => {
         });
 });
 
-router.delete('/:orderId', (req, res) => {
+router.delete('/:orderId', checkAuth, (req, res) => {
     const id = req.params.orderId;
     Order.findByIdAndRemove(id)
         .select('product quantity _id')

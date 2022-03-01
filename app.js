@@ -10,9 +10,9 @@ const userRouters = require('./app/routes/users');
 
 const app = express();
 
-mongoose.connect('mongodb+srv://node-rest-api:'
-    + process.env.MONGO_ATLAS_PASSWORD 
-    +'@node-rest-api.gcyge.mongodb.net/myFirstDatabase?retryWrites=true&w=majority', {
+mongoose.connect('mongodb+srv://node-rest-api:' +
+    process.env.MONGO_ATLAS_PASSWORD +
+    '@node-rest-api.gcyge.mongodb.net/myFirstDatabase?retryWrites=true&w=majority', {
         useNewUrlParser: true
     });
 

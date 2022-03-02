@@ -4,7 +4,8 @@ const jwt = require('jsonwebtoken');
 
 module.exports = (req, res, next) => {
     try {
-        const decodet = jwt.verify(req.body.token, "my name is amir");
+        const token = req.headers.authorization.split(" ")[1];
+        const decodet = jwt.verify(token, "my name is amir");
         req.userData = decodet;
         next();
     } catch (error) {

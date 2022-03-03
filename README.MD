@@ -20,6 +20,7 @@ npm start
 ## Usage
 ### users
 - **Sing up new user**
+
 Send POST request to /users/signup and Write below JSON into body request.
 
 ```json
@@ -29,6 +30,7 @@ Send POST request to /users/signup and Write below JSON into body request.
 }
 ```
 - **Login user**
+
 Send POST request to /users/login and Write below JSON into body request.
 
 ```json
@@ -38,6 +40,7 @@ Send POST request to /users/login and Write below JSON into body request.
 }
 ```
 - **Delete user acount**
+
 Send DELETE request to /users/:userId
 
 **NOTE:** you can see the userId and token in the response /users/login route.
@@ -53,9 +56,11 @@ Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RtYWlsQGdtYWlsLmNv
 
 ### products
 - **Get all products**
+
 Send GET request to /products
 
 - **Create a new product**
+
 Send POST request to /products and write below JSON into body request.
 
 
@@ -69,9 +74,11 @@ Send POST request to /products and write below JSON into body request.
 **NOTE:** you need also send valid token for Authorization request header.
 
 - **Get one product by product ID**
+
 Send GET request to /products/:productID
 
 - **Update items a product by product ID**
+
 Send PATCH request to /products/:productID and write below JSON into body request.
 
 ```json
@@ -86,6 +93,7 @@ Send PATCH request to /products/:productID and write below JSON into body reques
 **NOTE:** you need also send valid token for Authorization request header.
 
 - **Delete product by product ID**
+
 Send DELETE request to /products/:productID
 
 **NOTE:** you need also send valid token for Authorization request header.
@@ -95,11 +103,13 @@ Send DELETE request to /products/:productID
 
 ### orders
 - **Get all orders**
+
 Send GET request to /orders
 
 **NOTE:** you need also send valid token for Authorization request header.
 
 - **Create a new order**
+
 Send POST request to /orders and write below JSON into body request.
 
 ```json
@@ -114,11 +124,13 @@ Send POST request to /orders and write below JSON into body request.
 **NOTE:** you need also send valid token for Authorization request header.
 
 - **Get one order by order ID**
+
 Send GET request to /orders/:orderID
 
 **NOTE:** you need also send valid token for Authorization request header.
 
 - **Delete one order by order ID**
+
 Send DELETE request to /orders/:orderID
 
 **NOTE:** you need also send valid token for Authorization request header.
